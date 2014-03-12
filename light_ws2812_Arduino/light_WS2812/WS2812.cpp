@@ -52,6 +52,61 @@ uint8_t WS2812::set_crgb_at(uint16_t index, cRGB px_value) {
 	return 1;
 }
 
+
+uint8_t WS2812::set_rgb_at(uint16_t index, uint8_t R, uint8_t G, uint8_t B) {
+	if(index < count_led) {
+		
+		uint16_t tmp;
+		tmp = index * 3;
+		
+		pixels[tmp] = G;
+		pixels[tmp+1] = R;
+		pixels[tmp+2] = B;
+		
+		return 0;
+	} 
+	return 1;	
+}
+	
+	
+	
+	
+void WS2812::rainbow() {
+	
+	
+}
+
+
+void WS2812::pulse_color(uint16_t index, uint16_t duration, cRGB px_value) {
+	uint8_t r = px_value.r, g = px_value.g, b = px_value.b;
+	delay_time = duration / (255*2); // Time for each delay, if the complete cycle dures {duration}
+	
+	for(int i = 0; i < 255, i++) {
+		set_rgb_at(index, r*i, g*i, b*i);
+		delay(delay_time);
+	}
+	
+	for(int i = 255; i > 0, i--) {
+		set_rgb_at(index, r*i, g*i, b*i);
+	}
+	
+} 
+	
+void WS2812::pulse_color(uint16_t index, uint16_t duration, uint8_t R, uint8_t G, uint8_t B) {
+	uint8_t r = R, g = G, b = B;
+	delay_time = duration / (255*2); // Time for each delay, if the complete cycle dures {duration}
+	
+	for(int i = 0; i < 255, i++) {
+		set_rgb_at(index, r*i, g*i, b*i);
+		delay(delay_time);
+	}
+	
+	for(int i = 255; i > 0, i--) {
+		set_rgb_at(index, r*i, g*i, b*i);
+	}
+}
+	
+
 void WS2812::sync() {
 	*ws2812_port_reg |= (1<<7); // Enable DDR
 	ws2812_sendarray_mask(pixels,3*count_led,pinMask,(uint8_t*) ws2812_port,(uint8_t*) ws2812_port_reg );	
