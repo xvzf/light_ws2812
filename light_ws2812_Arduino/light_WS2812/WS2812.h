@@ -5,7 +5,7 @@
 * Author: Matthias Riegler
 *
 * Mar 07 2014: Added Arduino and C++ Library
-*
+* Mar 12 2014: Added several functions
 * License: GNU GPL v2 (see License.txt)
 */
 
@@ -44,6 +44,11 @@ public:
 	
 	cRGB get_crgb_at(uint16_t index);
 	uint8_t set_crgb_at(uint16_t index, cRGB px_value);
+	uint8_t set_rgb_at(uint16_t index, uint8_t R, uint8_t G, uint8_t B);
+	void rainbow(); // Rainbow effect one time
+	void pulse_color(uint16_t index, uint16_t duration, cRGB px_value); 
+	void pulse_color(uint16_t index, uint16_t duration, uint8_t R, uint8_t G, uint8_t B);
+	
 	void sync();
 	
 private:
